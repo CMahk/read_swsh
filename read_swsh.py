@@ -69,7 +69,7 @@ class TextFile():
 		return struct.unpack_from("<I", this.__data, offset)[0]
 
 	@property
-	def LineOffsets(this):
+	def __LineOffsets(this):
 		"""Figures out the offset for each entry based on the data section offset"""
 		result = [None] * this.__LineCount
 		sdo = int(this.__SectionDataOffset)
@@ -103,7 +103,7 @@ class TextFile():
 		"""Loads the file into a list to later decrypt"""
 		key = copy.copy(this.__KEY_BASE)
 		result = [None] * this.__LineCount
-		lines = this.LineOffsets
+		lines = this.__LineOffsets
 
 		for i in range(0, len(lines)):
 			# Make a list twice the size of the current text line size
@@ -222,19 +222,29 @@ if __name__ == "__main__":
 		labels = file.GetLabels()
 	except UserWarning as error:
 		print(error)
+	except Exception as Error:
+		print(error)
 
-	name = os.path.splitext(os.path.basename(sys.argv[1]))[0]
-	with open(os.path.abspath(os.path.dirname(__file__)) + "\\" + name + ".txt", "w", encoding = "utf-8") as f:
-		count = 0
-		for key, value in dictionary.items():
-			label = labels[count][0]
-			while (len(label) < 24):
-				label += " "
+	try:
+		if (len(dictionary) == 0 or len(labels) == 0):
+			raise UserWarning('Error: the files returned no data')
 
-			hash = hex(key[1]).replace("0x", "").upper()
-			while (len(hash) < 18):
-				hash += " "
+		name = os.path.splitext(os.path.basename(sys.argv[1]))[0]
+		with open(os.path.abspath(os.path.dirname(__file__)) + "\\" + name + ".txt", "w", encoding = "utf-8") as f:
+			count = 0
+			for key, value in dictionary.items():
+				label = labels[count][0]
+				while (len(label) < 24):
+					label += " "
 
-			print("%s:\t%s:\t%s\n" % (label, hash, value))
-			f.write("%s:\t%s:\t%s\n" % (label, hash, value))
-			count += 1
+				hash = hex(key[1]).replace("0x", "").upper()
+				while (len(hash) < 18):
+					hash += " "
+
+				print("%s:\t%s:\t%s\n" % (label, hash, value))
+				f.write("%s:\t%s:\t%s\n" % (label, hash, value))
+				count += 1
+	except UserWarning as error:
+		print(error)
+	except Exception as error:
+		print(error)
