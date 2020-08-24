@@ -99,7 +99,7 @@ class TextFile():
 
 		return hash
 
-	def LineData(this, data):
+	def __LineData(this, data):
 		"""Loads the file into a list to later decrypt"""
 		key = copy.copy(this.__KEY_BASE)
 		result = [None] * this.__LineCount
@@ -180,7 +180,7 @@ class TextFile():
 				raise UserWarning("Error: Could not open .dat")
 
 		# Decrypt the text
-		cryptedText = this.LineData(this.__data)
+		cryptedText = this.__LineData(this.__data)
 		this.__lines = []
 		for line in cryptedText:
 			this.__lines.append(this.__GetLineString(bytearray(line)).replace("\n", " ").replace("\t", " "))
