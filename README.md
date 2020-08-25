@@ -12,7 +12,7 @@ More information about what goes on in the background can be found [here](https:
 ## Features
 Supports:
 * Sword and Shield
-* Likely Let's Go, Pikachu! / Let's Go, Eevee! as well
+* Let's Go, Pikachu! / Let's Go, Eevee!
 
 Just drag and drop the .tbl and .dat of the specified files onto the script, and it will create a text file with all the decoded data you need!
 
