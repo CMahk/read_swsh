@@ -5,6 +5,8 @@ A script based on kwsch's [pkNX](https://github.com/kwsch/pkNX) project, specifi
 
 read_swsh reads the encoded data from Pokémon games. The script returns table labels, the label's FNV1_64 hash, and the text entry associated with the given files.
 
+More information about what goes on in the background can be found[here](https://projectpokemon.org/home/forums/topic/48656-lgpe-romfs-data-reverse-engineering/).
+
 ![Main Window](https://i.imgur.com/us4FpDl.png)
 
 ## Features
