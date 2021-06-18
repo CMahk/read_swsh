@@ -1,4 +1,5 @@
 import copy
+import csv
 import os
 import struct
 import sys
@@ -220,29 +221,21 @@ if __name__ == "__main__":
 		file = TextFile(sys.argv[1], sys.argv[2])
 		dictionary = file.GetDict()
 		labels = file.GetLabels()
-	except UserWarning as error:
-		print(error)
-	except Exception as Error:
-		print(error)
 
-	try:
 		if (len(dictionary) == 0 or len(labels) == 0):
 			raise UserWarning('Error: the files returned no data')
 
 		name = os.path.splitext(os.path.basename(sys.argv[1]))[0]
-		with open(os.path.abspath(os.path.dirname(__file__)) + "\\" + name + ".txt", "w", encoding = "utf-8") as f:
+		with open(os.path.abspath(os.path.dirname(__file__)) + "\\" + name + ".csv", "w", encoding = "utf-8", newline = "") as fCSV:
+			writer  = csv.writer(fCSV, delimiter = ",")
+			writer.writerow(("label", "hash", "flavor_text"))
+
 			count = 0
 			for key, value in dictionary.items():
 				label = labels[count][0]
-				while (len(label) < 24):
-					label += " "
-
 				hash = hex(key[1]).replace("0x", "").upper()
-				while (len(hash) < 18):
-					hash += " "
 
-				print("%s:\t%s:\t%s\n" % (label, hash, value))
-				f.write("%s:\t%s:\t%s\n" % (label, hash, value))
+				writer.writerow((label, hash, value))
 				count += 1
 	except UserWarning as error:
 		print(error)
