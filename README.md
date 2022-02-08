@@ -16,6 +16,7 @@ Supports:
 * Pokémon Shield
 * Pokémon Let's Go, Pikachu!
 * Pokémon Let's Go, Eevee!
+* Pokémon Legends: Arceus
 
 You will need the supported game's .dat and .tbl files, which are found in their decompressed RomFS.
 
